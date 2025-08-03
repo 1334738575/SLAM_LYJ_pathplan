@@ -34,7 +34,7 @@ if(MSVC)
 endif()
 
 set(${PROJECT_NAME}_LIBRARY_OUTPUT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/Output)
-set(${PROJECT_NAME}_CMAKE_FILE "C:/Users/DELL/Desktop/code/SLAM_LYJ_optimize/cmake/FuncLyj.cmake")
+set(${PROJECT_NAME}_CMAKE_FILE)
 set(CMAKE_INSTALL_PREFIX ${CMAKE_CURRENT_SOURCE_DIR}/install)
 
 # ################################cmake##################################

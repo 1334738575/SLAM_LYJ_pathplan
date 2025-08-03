@@ -8,12 +8,13 @@ int main(int argc, char *argv[])
 
     Eigen::Vector3d minP(0, 0, 0);
     Eigen::Vector3d maxP(20, 20, 20);
-    double resolution = 1;
+    double resolution = 0.1;
     double rbtRadius = 0.7;
     std::vector<Eigen::Vector3d> obstacles;
     obstacles.push_back(Eigen::Vector3d(5, 5, 5));
     PATH_PLAN_LYJ::PathPlanParam param;
-    param._method = PATH_PLAN_LYJ::ASTAR;
+    param.method = PATH_PLAN_LYJ::ASTAR;
+    param.debugPath = "D:/tmp";
     PATH_PLAN_LYJ::PathPlanHandle handle = PATH_PLAN_LYJ::createPathPlanner(minP, maxP, resolution, rbtRadius, obstacles, param);
 
     Eigen::Vector3d src(1, 1, 1);
@@ -22,7 +23,7 @@ int main(int argc, char *argv[])
     if (!PATH_PLAN_LYJ::planTwoLocations(handle, src, dst, path))
         std::cout << "can't find path!" << std::endl;
 
-    std::ofstream f("PathPlanPath.txt");
+    std::ofstream f(param.debugPath + "/PathPlanPath.txt");
     for (size_t i = 0; i < path.size(); ++i)
     {
         f << path[i](0) << " " << path[i](1) << " " << path[i](2) << " " << 0 << " " << 255 << " " << 0 << std::endl;

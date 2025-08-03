@@ -9,6 +9,7 @@ namespace PATH_PLAN_LYJ
     {
         grid_ = std::make_shared<PathPlanGrid>(_minP, _maxP, _resolution, _rbtRadius, _obstacles);
         param_ = _param;
+        grid_->debugPath_ = param_.debugPath;
     }
     PathPlannerAStar::~PathPlannerAStar()
     {

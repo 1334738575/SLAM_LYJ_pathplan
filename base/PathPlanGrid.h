@@ -57,6 +57,9 @@ namespace PATH_PLAN_LYJ
         std::vector<PathPlanNode *> nodes_;
 
     public:
+        std::string debugPath_ = "";
+
+    public:
         PathPlanGrid(const Eigen::Vector3d &_minP, const Eigen::Vector3d &_maxP, const double _resolution, const double _rbtRadius, const std::vector<Eigen::Vector3d> &_obstacles);
         ~PathPlanGrid();
 

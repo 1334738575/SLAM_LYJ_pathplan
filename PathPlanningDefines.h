@@ -24,7 +24,8 @@ namespace PATH_PLAN_LYJ
     struct PathPlanParam
     {
         /* data */
-        PLANMETHOD _method = ASTAR;
+        PLANMETHOD method = ASTAR;
+        std::string debugPath = "";
     };
 
 }

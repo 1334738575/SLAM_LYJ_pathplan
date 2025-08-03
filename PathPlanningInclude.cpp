@@ -6,7 +6,7 @@ namespace PATH_PLAN_LYJ
     PATH_PLAN_LYJ_API PathPlanHandle createPathPlanner(const Eigen::Vector3d &_minP, const Eigen::Vector3d &_maxP, const double _resolution, const double _rbtRadius, const std::vector<Eigen::Vector3d> &_obstacles, PathPlanParam _param)
     {
         PathPlannerAbr *planner = nullptr;
-        if (_param._method == ASTAR)
+        if (_param.method == ASTAR)
             planner = new PathPlannerAStar(_minP, _maxP, _resolution, _rbtRadius, _obstacles, _param);
         return (PathPlanHandle *)planner;
     }
