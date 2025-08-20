@@ -44,6 +44,13 @@ namespace PATH_PLAN_LYJ
                 v += (_src->loc_(i) - _dst->loc_(i)) * (_src->loc_(i) - _dst->loc_(i));
             return _src->g_ + std::sqrt(v);
         }
+        void reset()
+        {
+            status = 0;
+            g_ = 0;
+            h_ = 0;
+            parent_ = nullptr;
+        }
     };
 
     class PathPlanGrid
@@ -72,6 +79,8 @@ namespace PATH_PLAN_LYJ
         PathPlanNode *checkNode(const int &_ind);
 
         void getAroundNodes(PathPlanNode *_node, std::vector<PathPlanNode *> &_nodes);
+        void debugOut();
+        void reset();
 
     private:
         bool checkP(const Eigen::Vector3d &_realP);

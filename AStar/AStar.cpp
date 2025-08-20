@@ -10,6 +10,7 @@ namespace PATH_PLAN_LYJ
         grid_ = std::make_shared<PathPlanGrid>(_minP, _maxP, _resolution, _rbtRadius, _obstacles);
         param_ = _param;
         grid_->debugPath_ = param_.debugPath;
+        grid_->debugOut();
     }
     PathPlannerAStar::~PathPlannerAStar()
     {
@@ -87,6 +88,7 @@ namespace PATH_PLAN_LYJ
             std::reverse(_path.begin(), _path.end());
         }
         delete nodeDst;
+        grid_->reset();
         return true;
     }
     bool PathPlannerAStar::planLocations(const std::vector<Eigen::Vector3d> &_locs, std::vector<Eigen::Vector3d> &_path)

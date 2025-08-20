@@ -19,9 +19,10 @@ namespace PATH_PLAN_LYJ
         int indTmp;
         for (int oi = 0; oi < _obstacles.size(); ++oi)
         {
-            //gridPTmp
+            // gridPTmp
             if (_obstacles[oi](0) < minP_(0) || _obstacles[oi](1) < minP_(1) || _obstacles[oi](2) < minP_(2) ||
-                _obstacles[oi](0) > maxP_(0) || _obstacles[oi](1) > maxP_(1) || _obstacles[oi](2) > maxP_(2)) {
+                _obstacles[oi](0) > maxP_(0) || _obstacles[oi](1) > maxP_(1) || _obstacles[oi](2) > maxP_(2))
+            {
                 std::cout << "out of grid " << std::endl;
                 continue; // obstacle is out of the grid
             }
@@ -53,29 +54,13 @@ namespace PATH_PLAN_LYJ
     }
     PathPlanGrid::~PathPlanGrid()
     {
-        if (debugPath_ != "")
+        debugOut();
+        for (auto &node : nodes_)
         {
-            std::ofstream f(debugPath_ + "/PathPlanGrid.txt");
-            for (int i = 0; i < nodes_.size(); ++i)
-            {
-                if (nodes_[i] == nullptr)
-                    continue;
-                if (nodes_[i]->status == -1)
-                    f << nodes_[i]->loc_(0) << " " << nodes_[i]->loc_(1) << " " << nodes_[i]->loc_(2) << " " << 0 << " " << 0 << " " << 0 << std::endl;
-                else if (nodes_[i]->status == 0)
-                    f << nodes_[i]->loc_(0) << " " << nodes_[i]->loc_(1) << " " << nodes_[i]->loc_(2) << " " << 255 << " " << 255 << " " << 255 << std::endl;
-                else if (nodes_[i]->status == 1)
-                    f << nodes_[i]->loc_(0) << " " << nodes_[i]->loc_(1) << " " << nodes_[i]->loc_(2) << " " << 255 << " " << 255 << " " << 0 << std::endl;
-                else if (nodes_[i]->status == 2)
-                    f << nodes_[i]->loc_(0) << " " << nodes_[i]->loc_(1) << " " << nodes_[i]->loc_(2) << " " << 0 << " " << 255 << " " << 0 << std::endl;
-            }
-            f.close();
-        }
-        for (int i = 0; i < nodes_.size(); ++i)
-        {
-            if (nodes_[i])
-                delete nodes_[i];
-            nodes_[i] = nullptr;
+            auto &nd = node.second;
+            if (nd)
+                delete nd;
+            nd = nullptr;
         }
     }
 
@@ -131,29 +116,30 @@ namespace PATH_PLAN_LYJ
         int a = 1;
         Eigen::Vector3i gridPTmp;
         int indTmp;
-        //for (int i = -a; i <= a; ++i)
+        // for (int i = -a; i <= a; ++i)
         //{
-        //    gridPTmp(0) = gridP(0) + i;
-        //    for (int j = -a; j <= a; ++j)
-        //    {
-        //        gridPTmp(1) = gridP(1) + j;
-        //        for (int k = -a; k <= a; ++k)
-        //        {
-        //            if (i == 0 && j == 0 && k == 0)
-        //                continue;
-        //            gridPTmp(2) = gridP(2) + k;
-        //            if (!checkP(gridPTmp))
-        //                continue;
-        //            indTmp = grid2Ind(gridPTmp);
-        //            if (nodes_[indTmp] == nullptr)
-        //                nodes_[indTmp] = new PathPlanNode(gridPTmp);
-        //            _nodes.push_back(nodes_[indTmp]);
-        //        }
-        //    }
-        //}
+        //     gridPTmp(0) = gridP(0) + i;
+        //     for (int j = -a; j <= a; ++j)
+        //     {
+        //         gridPTmp(1) = gridP(1) + j;
+        //         for (int k = -a; k <= a; ++k)
+        //         {
+        //             if (i == 0 && j == 0 && k == 0)
+        //                 continue;
+        //             gridPTmp(2) = gridP(2) + k;
+        //             if (!checkP(gridPTmp))
+        //                 continue;
+        //             indTmp = grid2Ind(gridPTmp);
+        //             if (nodes_[indTmp] == nullptr)
+        //                 nodes_[indTmp] = new PathPlanNode(gridPTmp);
+        //             _nodes.push_back(nodes_[indTmp]);
+        //         }
+        //     }
+        // }
         for (int i = 0; i <= 3; ++i)
         {
-            for (int j = -1; j < 2; ++j) {
+            for (int j = -1; j < 2; ++j)
+            {
                 gridPTmp = gridP;
                 gridPTmp(i) = gridP(i) + j;
                 if (!checkP(gridPTmp))
@@ -165,6 +151,41 @@ namespace PATH_PLAN_LYJ
             }
         }
         return;
+    }
+    void PathPlanGrid::debugOut()
+    {
+        if (debugPath_ != "")
+        {
+            std::ofstream f(debugPath_ + "/PathPlanGrid.txt");
+            for (auto &node : nodes_)
+            {
+                auto &nd = node.second;
+                if (nd == nullptr)
+                    continue;
+                if (nd->status == -1)
+                    f << nd->loc_(0) << " " << nd->loc_(1) << " " << nd->loc_(2) << " " << 0 << " " << 0 << " " << 0 << std::endl;
+                else if (nd->status == 0)
+                    f << nd->loc_(0) << " " << nd->loc_(1) << " " << nd->loc_(2) << " " << 255 << " " << 255 << " " << 255 << std::endl;
+                else if (nd->status == 1)
+                    f << nd->loc_(0) << " " << nd->loc_(1) << " " << nd->loc_(2) << " " << 255 << " " << 255 << " " << 0 << std::endl;
+                else if (nd->status == 2)
+                    f << nd->loc_(0) << " " << nd->loc_(1) << " " << nd->loc_(2) << " " << 0 << " " << 255 << " " << 0 << std::endl;
+            }
+            f.close();
+        }
+    }
+    void PathPlanGrid::reset()
+    {
+        for (auto &node : nodes_)
+        {
+            auto &nd = node.second;
+            if (nd == nullptr)
+                continue;
+            if (nd->status == 1)
+                nd->reset();
+            if (nd->status == 2)
+                nd->reset();
+        }
     }
 
     bool PathPlanGrid::checkP(const Eigen::Vector3d &_realP)
