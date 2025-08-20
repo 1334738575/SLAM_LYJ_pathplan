@@ -29,7 +29,7 @@ namespace PATH_PLAN_LYJ
             return false;
         int indDst = grid_->real2Ind(_dst);
         PathPlanNode *nodeDst = grid_->checkNode(indDst);
-        if (nodeDst)
+        if (nodeDst->status == 2)
             return false;
         nodeDst = new PathPlanNode(gridDst);
         nodeSrc->calculateH(nodeDst);
