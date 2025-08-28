@@ -37,7 +37,7 @@ namespace PATH_PLAN_LYJ
         PathPlanNode *nodeTmp = nullptr;
         std::vector<PathPlanNode *> nodesTmp;
         double gTmp;
-        while (!openSet.empty() && grid_->checkNode(indDst) == nullptr)
+        while (!openSet.empty() && (grid_->checkNode(indDst) == nullptr || grid_->checkNode(indDst)->status != 2))
         {
             std::sort(openSet.begin(), openSet.end(), [](const PathPlanNode *_n1, const PathPlanNode *_n2)
                       { return _n1->getf() > _n2->getf(); });
