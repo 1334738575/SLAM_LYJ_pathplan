@@ -57,7 +57,7 @@ namespace PATH_PLAN_LYJ
         debugOut();
         for (auto &node : nodes_)
         {
-            auto &nd = node.second;
+            auto& nd = node;// .second;
             if (nd)
                 delete nd;
             nd = nullptr;
@@ -159,7 +159,7 @@ namespace PATH_PLAN_LYJ
             std::ofstream f(debugPath_ + "/PathPlanGrid.txt");
             for (auto &node : nodes_)
             {
-                auto &nd = node.second;
+                auto& nd = node;// .second;
                 if (nd == nullptr)
                     continue;
                 if (nd->status == -1)
@@ -178,7 +178,7 @@ namespace PATH_PLAN_LYJ
     {
         for (auto &node : nodes_)
         {
-            auto &nd = node.second;
+            auto& nd = node;// .second;
             if (nd == nullptr)
                 continue;
             if (nd->status == 1)
